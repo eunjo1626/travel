@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+       * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+        text-decoration: none;
+      }
+
+      /* 기본 링크 색상 */
+      a {
+        color: #222; /* 검정 */
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+      }
+
+      /* 방문한 링크도 검정으로 유지 */
+      a:visited {
+        color: #222;
+      }
+
+      /* 마우스 올리면 skyblue */
+      a:hover {
+        color: skyblue;
+      }
+
+      /* 클릭 순간(활성)에는 더 진한 파랑 */
+      a:active {
+        color: deepskyblue;
+      }
+        html{
+        overflow-y: scroll;
+      }
+
+        html,
+        body {
+            /* height: 100%; */
+            width: 100%;
+        }
+
+        body {
+            width: 100%;
+            /* height: 100%; */
+            overflow-x: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            padding-top: 90px;
+        }
+
+        nav {
+            width: 100%;
+            height: 90px; /* 원래는 10vh였음*/
+            font-size: 18px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: white;
+            z-index: 999;
+            /* min-height: 90px; */ /* 네비 위치 확인 때문에 잠시 지우기*/
+        }
+
+        .logo img {
+            width: 85px;
+            /* height: 100px; */
+            object-fit: cover;
+        }
+
+        .navBox ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: auto;
+            gap: 100px;
+            /* height: 90px; */
+        }
+
+        .navBox li {
+            cursor: pointer;
+        }
+
+        .navBox li:hover a {
+            color: skyblue;
+            transition: all 0.3s linear;
+        }
+
+        @media screen and (max-width: 480px) {
+            .navBox ul {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin: auto;
+                gap: 13px;
+            }
+        }
+        /* 네비끝 */
+
+        .top {
+            width: 100%;
+            /* margin-top: 9vh; */
+            height: calc(100vh - 180px);
+            margin-bottom: 30px;
+        }
+
+
+        .outBox {
+            width: 80%;
+            height: 100%;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .card {
+            position: relative;
+            /* overlay 위치 기준 */
+            width: 50%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            /* 모서리 둥글게 유지 */
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+         @media screen and (max-width: 480px){
+        .outBox {
+            width: 80%;
+            height: 95%;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 5px auto;
+            flex-direction: column;
+        }
+            .card {
+            position: relative;
+            /* overlay 위치 기준 */
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            /* 모서리 둥글게 유지 */
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+         }
+
+        /* 기본 상태: 약간 어두움 */
+        .card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        /* hover 시 선명하게 (투명도 줄이기) */
+        .card:hover .overlay {
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        /* 텍스트는 overlay 위에 보여야 하니까 z-index 높게 */
+        .card .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card1 {
+            background-image: url(/img/prew3.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        .card2 {
+            background-image: url(/img/prew4.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+
+        .detail-section {
+             width: 80%;
+            margin: 20px auto;
+            /* 카드와 적당한 간격 */
+            padding: 30px 20px;
+            box-sizing: border-box;
+            display: none;
+            /* 토글로만 제어 */
+            background-color: white;
+            /* 배경은 원하면 설정 */
+        }
+         @media screen and (max-width: 480px){
+           .detail-section { width: 80%;
+            box-sizing: border-box;
+            display: none;
+            margin-top: auto;
+            background-color: white;
+            }
+            .detail-section img {
+             display: flex;
+            max-width: 60%;
+            height: auto;
+            border-radius: 10px !important
+        }
+         }
+         /* 레이아웃 수정 */
+         .wrap{
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+         }
+        .city .content {
+            display: flex;
+            align-items: center;  /* 이미지와 텍스트 수직 가운데 정렬 */
+            gap: 20px;           /* 여백 넉넉하게 */
+            }
+
+            .city .content .image img {
+            width: 60%;   /* 원하는 크기 */
+            height: auto;
+            border-radius: 12px;
+            }
+
+            .city .content .text {
+            flex: 1;
+            }
+
+            .city .content .text h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            }
+              @media screen and (max-width: 480px){
+                  .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .city .content,
+  .history .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center; /* 텍스트도 중앙 정렬 */
+  }
+
+  .city .content img,
+  .history .content img,
+  .detail-section img {
+    width: 100%;
+    max-width: 320px; /* 모바일 기준 적절한 최대폭 */
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .detail-section {
+    width: 90%;
+    margin-top: 20px;
+    padding: 20px;
+  }
+}
+              
+
+            .history .content {
+            display: flex;
+            align-items: center;  /* 이미지와 텍스트 수직 가운데 정렬 */
+            gap: 20px;           /* 여백 넉넉하게 */
+            }
+
+            .history .content .image img {
+            width: 40%;   /* 원하는 크기 */
+            height: auto;
+            border-radius: 12px;
+            }
+
+            .history .content .text {
+            flex: 1;
+            }
+
+            .history .content .text h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            }
+     
+
+
+        .detail-section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .detail-section p {
+            text-align: center;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .detail-section img {
+            display: flex;
+            max-width: 55%;
+            height: auto;
+            border-radius: 10px !important
+        }
+
+        /* 이미지 슬라이더 */
+        .imgBox {
+            display: flex;
+            gap: 30px;
+            overflow: hidden;
+            /* 스크롤바 숨김 */
+            cursor: grab;
+             margin-top: 30px;
+        }
+
+        .imgBox img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            flex-shrink: 0;
+            /* 줄어들지 않음 */
+            user-select: none;
+            /* 드래그 시 텍스트 선택 방지 */
+            pointer-events: none;
+            border-radius: 10px;
+        }
+             .drag-hint {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: gray;
+        font-style: italic;
+}
+
+  
+
+         footer {
+        background-color: skyblue;
+        color: #fff;
+        width: 100%;
+        padding: 20px 40px;
+      }
+
+      /* 좌·중앙·우 3컬럼을 가진 실제 컨테이너 */
+      .footContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap; /* 화면 줄면 자동 줄바꿈 */
+      }
+
+      /* 좌: 로고 */
+      .footBrand img {
+        height: 120px;
+        display: block;
+      }
+
+      /* 중앙: 추천 지역 지도(클릭 영역) */
+      .footMap {
+        text-align: center;
+      }
+      #openMapBtn {
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: color 0.3s, transform 0.2s;
+      }
+      #openMapBtn:hover {
+        color: navy;
+        transform: scale(1.05);
+      }
+
+      /* 우: 연락처/저작권 */
+      .footRight {
+        text-align: right;
+      }
+      .footContact p {
+        margin: 4px 0;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      .footCopy {
+        margin-top: 5px;
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+
+      /* 모바일에서 가운데 정렬 */
+      @media screen and (max-width: 480px) {
+        .footContainer {
+          justify-content: center;
+          text-align: center;
+        }
+        .footRight {
+          text-align: center;
+        }
+      }
+
+      /* 추천 지역 지도 */
+      .footMap {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .mapIcon {
+        width: 24px;
+        height: auto;
+        margin-top: 5px;
+      }
+
+      /* 오른쪽 (연락처 + 저작권) */
+      .footRight {
+        text-align: right;
+      }
+
+      .footContact p {
+        margin: 3px 0;
+        font-size: 0.85rem;
+      }
+
+      .footCopy {
+        margin-top: 5px;
+        font-size: 0.75rem;
+        opacity: 0.9;
+      }
+
+      /* 모달 배경 */
+      .modal {
+        display: none; /* 기본은 숨김 */
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      /* 모달 안 컨텐츠 */
+      .modal-content {
+        background: white;
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 800px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* 닫기 버튼 */
+      .close {
+        color: #333;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close:hover {
+        color: red;
+      }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav">
+            <div class="navBox">
+                <ul>
+                    <li class="logo">
+                        <a href="/index.html">
+                            <img src="./img/로고.png" alt="Logo">
+                        </a>
+                    </li>
+                    <li><a href="/Spring.html">Spring </a> </li>
+                    <li><a href="/Summer.html">Summer</a> </li>
+                    <li><a href="/Autumn.html">Autumn</a></li>
+                    <li><a href="/Winter.html">Winter</a></li>
+                </ul>
+            </div>
+        </nav>
+        <section class="top">
+            <div class="outBox">
+                <div class="card card1" onclick="showSection('izu')">
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <h1>이즈</h1>
+                        <h2>시원한 바다가 반겨주는 마을</h2>
+                    </div>
+                </div>
+                <div class="card card2" onclick="showSection('nagano')">
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <h1>나가노</h1>
+                        <h2>피톤치트 가득한 숲 속 여행 </h2>
+                    </div>
+                </div>
+        </section>
+
+        <section id="izu" class="detail-section">
+            <div class="wrap">
+                <div class="city">
+                    <div class="content">
+                        <img src="/img/mihama-2048x1338.webp" alt="" class="img1" />
+                        <div class="text">
+                             <h2>지역&온천</h2>
+                             <p>시즈오카 현에 위치한 바닷가 마을로, 도쿄에서 1시간 거리라 교통이 편리합니다.</p>
+                             <p>바다에서 스노클링과 해양 액티비티를 즐길 수 있으며, 여름 여행지로 제격입니다.</p>
+                             <p>이토 온천과 시모다 온천에서는 바다와 함께하는 특별한 온천 경험을 할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity">
+                    <h2>즐길거리&체험</h2>
+                    <ul>
+                        <li>
+                            <p>
+                                오무로산&샤보텐동물원 - 분화구 산책과 선인장 박물관, 카피바라·나무늘보 등 다양한 동물을 만날 수 있습니다.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                조가사키 해안 - 용암으로 형성된 절벽과 바다 풍경이 어우러진 하이킹 명소입니다.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                가와즈 7폭포 - 서로 이어진 일곱 폭포 중 오다루 폭포는 신들의 전설이 전해집니다.                            </p>
+                        </li>
+                        <li class="imgBox">
+                            <img src="/img/sea.jpg" />
+                            <img src="img/샤보텐.jpg"/>
+                            <img src="img/샤보텐동물원.webp"/>
+                            <img src="img/샤보텐food.jpeg"/>
+                            <img src="img/조가사키해안.jpg"/>
+                            <img src="img/가와즈폭포.webp" />
+                            <img src="img/가와즈폭포2.jpg"/>
+                        </li>
+                        <p class="drag-hint">← 드래그 해보세요 →</p>
+                    </ul>
+                </div>
+                <div class="food">
+                    <h2>이색음식</h2>
+                    <ul>
+                        <li>
+                            <p>
+                                와사비 요리 - 세계농업유산으로 지정된 시즈오카 물와사비로 만든 특별한 요리.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                해산물 요리 - 금눈돔과 가이센동 등 바다의 신선한 맛을 즐길 수 있습니다.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                시즈오카 와규 - 깊은 역사와 전통을 가진 고급 와규 생산지입니다.
+                            </p>
+                        </li>
+                        <li class="imgBox">
+                            <img src="/img/와사비절임.webp" />
+                            <img src="/img/와규.webp" />
+                            <img src="img/금눈돔요리.jpg"/>
+                            <img src="/img/와규2.jpg" />
+                            <img src="/img/와사비커피.webp" />
+                            <img src="/img/카이센동.jpg"/>
+                        </li>
+                        <p class="drag-hint">← 드래그 해보세요 →</p>
+                    </ul>
+                </div>
+                <div class="history">
+                     <div class="content">
+                        <img src="/img/14-14-14-08-1078369470f221f2b14eb200474b85066558.webp"  alt="" class="img1" />
+                        <div class="text">
+                            <h2>전설</h2>
+                            <p style="font-weight: bold;">슈젠지 온천</p>
+                            <p>홍법대사가 금강저를 내려치자 온천이 솟아났다는 전설이 전해집니다.</p>
+                            <p>온천 물은 지금도 거리를 흐르며, 마을의 상징이자 대표 명소로 자리하고 있습니다.</p>
+                            <p>이 신비로운 온천은 이즈의 역사와 문화를 보여주는 상징입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="nagano" class="detail-section">
+            <div class="wrap">
+                <div class="city">
+                    <div class="content">
+                        <img src="/img/asama749.jpg" alt="" />
+                        <div class="text">
+                             <h2>지역&온천</h2>
+                             <p>일본의 알프스로 불리며, 울창한 숲과 맑은 공기가 매력적인 지역입니다.</p>
+                             <p>숲속의 고요함과 새소리, 바람소리로 자연 치유를 경험할 수 있습니다.</p>
+                             <p>사계절 모두 아름답지만 여름에는 숲과 계곡에서 시원함을 느낄 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity">
+                    <h2>즐길거리&체험</h2>
+                    <ul>
+                        <li>
+                            <p>
+                                지고쿠다니 야생 원숭이 공원 - 온천 속 원숭이들을 만날 수 있는 특별한 체험.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                숲길 트래킹 - 시라카바 숲길과 야쓰가타케 고원에서 청량한 산책을 즐깁니다.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                공예체험 - 목각인형과 대나무 공예품 등 전통 수공예를 직접 경험할 수 있습니다.
+                            </p>
+                        </li>
+                        <li class="imgBox">
+                            <img src="/img/온천원숭이.jpg" />
+                            <img src="/img/시라카마산지.avif" />
+                            <img src="/img/95703d1c-pixta_91927995_m-680x453.avif" />
+                            <img src="/img/main_ko.jpg" />
+                            <img src="/img/ABG_7353.jpg" />
+                            <img src="/img/20240819OMO5kanazawa-1986web_hsyloe.avif" />
+                        </li>
+                        <p class="drag-hint">← 드래그 해보세요 →</p>
+                    </ul>
+                </div>
+                <div class="food">
+                    <h2>이색음식</h2>
+                    <ul>
+                        <li>
+                            <p>
+                                산채요리 - 고원에서 채취한 나물로 만든 산채 요리
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                사과디저트 - 사과 산지인 나가노답게 다양한 사과 디저트가 인기입니다
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                오야키 - 나가노식 전통 찐빵
+                            </p>
+                        </li>
+                        <li class="imgBox">
+                            <img src="/img/ringojyu-su-300x225.jpg" />
+                            <img src="/img/IMG_1927.jpeg" />
+                            <img src="/img/big_n202203075amixu113340980664.jpg" />
+                            <img src="img/unnamed.jpg">
+                            <img src="/img/e0434f46.jpg">
+                            
+                        </li>
+                        <p class="drag-hint">← 드래그 해보세요 →</p>
+                    </ul>
+                </div>
+                <div class="history">
+                     <div class="content">
+                        <img src="/img/4eeb57_d5d832fa52c84d56922131b358ab214f~mv2.webp" alt="" class="img1" />
+                        <div class="text">
+                            <h2>전설</h2>
+                            <p style="font-weight: bold;">사슴탕</p>
+                            <p>사냥꾼이 발견한 온천에서 다친 사슴이 치유되었다는 전설이 있습니다.</p>
+                            <p>이후 온천은 치유와 장수의 상징으로 불리며 ‘사슴탕’이라는 이름이 붙었습니다.</p>
+                            <p>지금도 치유와 휴식을 찾는 이들에게 사랑받는 명소로 전해집니다.</p>
+                        </div>
+                    </div>
+            </div>
+        </section>
+    </div>
+      <footer>
+        <div class="footContainer">
+          <!-- 좌측: 로고/브랜드 -->
+          <div class="footBrand">
+            <img src="/img/로고.png" alt="여행 로고" class="footLogo" />
+          </div>
+
+          <!-- 중앙: 추천 지역 지도 (클릭 시 모달 열림) -->
+          <div class="footMap">
+            <p id="openMapBtn" style="cursor: pointer">🗺️ 추천 지역 지도</p>
+          </div>
+
+          <!-- 우측: 연락처 + 저작권 -->
+          <div class="footRight">
+            <div class="footContact">
+              <p>Phone 010-1234-1234</p>
+              <p>E-mail travel@naver.com</p>
+              <p>Address 경기도 안산시 단원구</p>
+            </div>
+            <div class="footCopy">
+              © 2025년 9월 여행 창작 과제 | All rights reserved
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- 모달 구조 -->
+      <div id="mapModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <!-- 📌 여기에 구글 마이맵 퍼오기 iframe 코드 붙여넣기 -->
+          <iframe
+            src="https://www.google.com/maps/d/u/1/embed?mid=1OpFnEqwQm2dS8zFa8EJ2s8WttTs8J90&ehbc=2E312F&noprof=1"
+            width="640"
+            height="480"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.imgBox').forEach((slider) => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1; // 드래그 속도 (1 = 기본)
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
+
+        // 토글
+        function showSection(id) {
+            // 모든 detail-section 숨기기
+            document.querySelectorAll('.detail-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+
+            // 클릭한 섹션만 보이기
+            const target = document.getElementById(id);
+            target.style.display = 'block';
+
+            // 스크롤 고정 (자동 이동 방지)
+            window.scrollTo({ top: document.querySelector('.top').offsetTop, behavior: 'instant' });
+        }
+
+         // 모달창
+      const modal = document.getElementById("mapModal");
+      const btn = document.getElementById("openMapBtn");
+      const span = document.querySelector(".close");
+
+      // 버튼 클릭 → 모달 열기
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // X 버튼 → 모달 닫기
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // 배경 클릭 → 모달 닫기
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>    
+</body>
+
+</html>
+
+
+
+
+
+
+
